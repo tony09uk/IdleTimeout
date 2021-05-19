@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+
 import { timer } from 'rxjs';
 import { finalize, takeWhile, tap } from 'rxjs/operators';
+
 import { IdleWarningStates } from '../enums/idle-warning.states.enum';
 import { IdleService } from '../services/idle.service';
 

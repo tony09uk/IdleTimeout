@@ -1,7 +1,9 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+
 import { Observable, of, Subscription} from 'rxjs';
 import { mergeMap } from 'rxjs/internal/operators/mergeMap';
 import { tap } from 'rxjs/internal/operators/tap';
+
 import { DialogConfirmData } from '../../dialog/dialog-confirm/models/dialog-confirm.data.model';
 import { DialogConfirmService } from '../../dialog/dialog-confirm/services/dialog-confirm.service';
 import { IdleWarningComponent } from '../countdown/idle-warning.component';
@@ -80,7 +82,7 @@ export class TsIdleComponent implements OnInit, OnDestroy {
   }
 
   private setState(action: boolean | null): void {
-    if (action === null) {
+    if (!action) {
       return;
     }
 

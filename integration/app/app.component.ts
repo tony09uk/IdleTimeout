@@ -31,7 +31,6 @@ export class AppComponent implements OnInit {
           if (val === IdleWarningStates.SecondaryTimerExpired) {
             this._idleService.stopTimer();
             this.idleTimer = false;
-            console.log('timer stopped');
           }
         }
       );
@@ -39,9 +38,6 @@ export class AppComponent implements OnInit {
 }
 
 // TODO:
-// RESOLVE BUG IN IdleWarningComponent
-// (WHEN WARNING SHOWS IF THE USER MOVES THE MOUSE THEN THE IdleWarningStates.SecondaryTimerExpired
-// IS RETURNED, IT SHOUD ONLY RETURN IdleWarningStates.Cancelled)
 // THEN FOLLOW
 // https://medium.com/@nikolasleblanc/building-an-angular-4-component-library-with-the-angular-cli-and-ng-packagr-53b2ade0701e
 // THEN FOLLOW (from: 5mins)
