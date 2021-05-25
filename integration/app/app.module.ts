@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TsIdleModule } from './ts-idle/ts-idle.module';
+import { DialogConfirmModule } from './dialog/dialog.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { TsIdleModule } from './ts-idle/ts-idle.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    TsIdleModule
+    TsIdleModule,
+    DialogConfirmModule
   ],
   providers: [],
   bootstrap: [AppComponent]

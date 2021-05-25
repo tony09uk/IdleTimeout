@@ -9,22 +9,25 @@ import { DialogConfirmService } from '../../dialog/dialog-confirm/services/dialo
 import { IdleWarningComponent } from '../countdown/idle-warning.component';
 import { IdleWarningStates } from '../enums/idle-warning.states.enum';
 import { IdleService } from '../services/idle.service';
+import { ModalService } from '../services/modal.service';
 
 @Component({
   selector: 'ts-idle',
-  template: ``
+  templateUrl: './ts-idle.component.html',
 })
 export class TsIdleComponent implements OnInit, OnDestroy {
 
+  @Input() allowedIdleTimeInSeconds = 60;
+  @Input() warningTimeInSeconds = 10;
+
+  modalId = 'timeout';
+
   constructor(
     private _idleService: IdleService,
-    private _dialogConfirmService: DialogConfirmService) { }
+    private _modalService: ModalService) { }
 
   private _isIdlePopupOpen = false;
   private _subscriptionsArray$: Subscription[] = [];
-
-  @Input() allowedIdleTimeInSeconds = 60;
-  @Input() warningTimeInSeconds = 10;
 
   ngOnInit(): void {
     this._idleService.allowedIdleTime = this.allowedIdleTimeInSeconds;
@@ -40,7 +43,6 @@ export class TsIdleComponent implements OnInit, OnDestroy {
       item.unsubscribe();
     });
     this._idleService.stopTimer();
-    this._dialogConfirmService.close();
   }
 
   private watchTimeout(): void {
@@ -66,17 +68,12 @@ export class TsIdleComponent implements OnInit, OnDestroy {
   }
 
   private showTimeoutWarning(state: IdleWarningStates): Observable<boolean | null> {
+    // todo: is this needed?
     if (state === IdleWarningStates.PrimaryTimerExpired && !this._isIdlePopupOpen) {
       this._isIdlePopupOpen = true;
 
-      const data: DialogConfirmData = {
-        title: 'Logging out',
-        component: IdleWarningComponent,
-        showFooter: false
-      };
-
-      this._dialogConfirmService.open(data);
-      return this._dialogConfirmService.confirmed();
+      this._modalService.open(this.modalId);
+      return this._modalService.afterClosed();
     }
     return of(null);
   }
@@ -103,7 +100,8 @@ export class TsIdleComponent implements OnInit, OnDestroy {
     if (!this._isIdlePopupOpen) {
       return;
     }
-    this._dialogConfirmService.close();
+
+    this._modalService.close(this.modalId);
     this._isIdlePopupOpen = false;
   }
 }
